@@ -11,7 +11,10 @@ export default function EditTopicForm({ id, title, description }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!newTitle || !newDescription) {
+      alert("Title and description are required.");
+      return;
+    }
     try {
       const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
         method: "PUT",
@@ -39,6 +42,7 @@ export default function EditTopicForm({ id, title, description }) {
         value={newTitle}
         className="border border-slate-500 px-8 py-2"
         type="text"
+        required
         placeholder="Topic Title"
       />
 
@@ -47,6 +51,7 @@ export default function EditTopicForm({ id, title, description }) {
         value={newDescription}
         className="border border-slate-500 px-8 py-2"
         type="text"
+        required
         placeholder="Topic Description"
       />
 

@@ -4,9 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const { title, description } = await request.json();
-  await connectMongoDB();
-  await Topic.create({ title, description });
-  return NextResponse.json({ message: "Topic Created" }, { status: 201 });
+  if (title && description) {
+    await connectMongoDB();
+    await Topic.create({ title, description });
+    return NextResponse.json({ message: "Topic Created" }, { status: 201 });
+  } else {
+    return NextResponse.json({ message: "Invalid Input" }, { status: 404 });
+  }
 }
 
 export async function GET() {
